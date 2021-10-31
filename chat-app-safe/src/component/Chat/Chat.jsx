@@ -4,8 +4,10 @@ import socketIo from "socket.io-client";
 import "./chat.css";
 import Message from "../Message/Message";
 import ReactScrollToBottom from "react-scroll-to-bottom";
+import {  useHistory } from "react-router-dom";
 // eslint-disable-next-line
 const forge = require("node-forge");
+
 
 let socket;
 
@@ -15,7 +17,14 @@ const ENDPOINT = "http://localhost:4500/";
 export const Chat = () => {
   const [id, setid] = useState("");
   const [messages, setMessages] = useState([]);
+  const [secure,setSecure] = useState("Not Secure retry")
+  const [datas,setDatas] = useState({})
+  let history = useHistory();
   // Sending message to server
+
+  window.onload= ()=>{
+    window.location.reload(history.push("/"));
+  }
   const send = () => {
     const message = document.getElementById("chat-input").value;
     //console.log(message);
@@ -59,8 +68,33 @@ export const Chat = () => {
 		console.log("B", B);
 
 		// Send B to server and get K_a, A from server
-		socket.emit("exchange", {B,q,p});
-		socket.on("exchange", data => {
+		socket.emit("exchange", {B});
+    setDatas({
+      btn,
+      b,
+      p
+    })
+
+	});
+  
+    
+    
+    console.log(socket);
+    socket.emit("joined", { user });
+
+
+
+    return () => {
+      socket.disconnect();
+      socket.off();
+    };
+    // eslint-disable-next-line
+  },[]);
+
+  useEffect(()=>{
+    const btn = document.getElementById("send-btn")
+    const {b,p} = datas
+    socket.on("exchange", data => {
       console.log("Exchange under process");
 			let { K_a, A } = data;
 			// Calculate K_b = A^b mod p
@@ -71,21 +105,18 @@ export const Chat = () => {
 			if (K_a === K_b) {
 				btn.className = "";
 				btn.disabled = false;
-				alert("Connection secure.");
+        setSecure("Secure communication")
 				// Send request to obtain AES-128 key and IV
 				socket.emit("secure");
 			} else {
 				btn.className += "disabled";
 				btn.disabled = true;
-				alert("Connection not secure.");
+        setSecure("Not Secure retry")
 			}
 		});
-	});
-    
-    
-    console.log(socket);
-    socket.emit("joined", { user });
+  })
 
+  useEffect(() => {
     socket.on("welcome", (data) => {
       setMessages([...messages, data]);
       console.log(data.user, data.message);
@@ -102,14 +133,6 @@ export const Chat = () => {
       console.log(data.user, data.message);
     });
 
-    return () => {
-      socket.disconnect();
-      socket.off();
-    };
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     socket.on("sendMessage", ({ user, encryptedMsg, id, key, iv }) => {
       //console.log("The displayed data");
       //console.log("Encrypted text",encryptedMsg);
@@ -137,7 +160,7 @@ export const Chat = () => {
     <div className="chat-page">
       <div className="chat-container">
         <div className="header">
-          <h2>Secure chat</h2>
+          <h2>Secure chat ({secure})</h2>
           <p>
             <a href="/">Exit</a>
           </p>
