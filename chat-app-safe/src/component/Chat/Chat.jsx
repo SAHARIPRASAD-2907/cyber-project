@@ -35,13 +35,21 @@ export const Chat = () => {
     //console.log("secure", SECURE);
   };
 
-  function secureConnection(socket,btn){
+  useEffect(() => {
+    socket = socketIo(ENDPOINT, { transports: ["websocket"] });
+    const btn = document.getElementById("send-btn")
+    btn.className += "disabled";
+    btn.disabled = true;
+    socket.on("connect", () => {
+      setid(socket.id);
+    });
     console.log("FUNCTION RUNNING");
     const b = Math.floor(Math.random() * 9) + 1;
 	// Send request to obtain p & q from server
 	socket.emit("request");
 	// Receive p & q from server
 	socket.on("request", data => {
+    console.log("Request sent");
 		let { q, p } = data;
 		console.log("q", q, "p", p);
 		console.log("b", b);
@@ -51,8 +59,9 @@ export const Chat = () => {
 		console.log("B", B);
 
 		// Send B to server and get K_a, A from server
-		socket.emit("exchange", B);
+		socket.emit("exchange", {B,q,p});
 		socket.on("exchange", data => {
+      console.log("Exchange under process");
 			let { K_a, A } = data;
 			// Calculate K_b = A^b mod p
 			const K_b = Math.pow(A, b) % p;
@@ -72,14 +81,6 @@ export const Chat = () => {
 			}
 		});
 	});
-  }
-  useEffect(() => {
-    socket = socketIo(ENDPOINT, { transports: ["websocket"] });
-    const btn = document.getElementById("send-btn")
-    socket.on("connect", () => {
-      setid(socket.id);
-      //secureConnection(socket,btn)
-    });
     
     
     console.log(socket);

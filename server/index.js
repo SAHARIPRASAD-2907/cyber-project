@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
 
 	// 1.) Send p & q to client
 	socket.on("request", data => {
+    console.log("Request recieved");
 		console.log("q", q, "p", p);
 		socket.emit("request", {
 			q: q,
@@ -43,17 +44,21 @@ io.on("connection", (socket) => {
 	// 3.) Exchange A & B
 	socket.on("exchange", data => {
 		console.log("B:", data);
-		const B = data;
+		const {B} = data;
 		// 2.) Calculate A = q^a mod p
+    console.log(q);
+    console.log(a);
+    console.log(p);
+    console.log("-----------------");
 		const A = Math.pow(q, a) % p;
-    console.log(A);
+    console.log("A-",A);
 		// Calculate K(a) = B^a mod p
 		const K_a = Math.pow(B, a) % p;
-    console.log(K_a);
+    console.log("K_a",K_a);
 		// Send A and K_a to client
 		socket.emit("exchange", {
-			K_a: K_a,
-			A: A
+			K_a,
+			A
 		});
 	});
 
