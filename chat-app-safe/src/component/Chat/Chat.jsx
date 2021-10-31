@@ -11,7 +11,8 @@ const forge = require("node-forge");
 
 let socket;
 
-const ENDPOINT = "http://localhost:4500/";
+const ENDPOINT = "https://chat-server-secure.herokuapp.com/";
+// const ENDPOINT = "http://localhost:4500";
 // eslint-disable-next-line
 
 export const Chat = () => {
