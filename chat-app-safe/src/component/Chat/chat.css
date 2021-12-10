@@ -1,82 +1,84 @@
-.chat-page{
-    background-color: rgb(31,29,29);
-    width:100vw;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items: center;
+.chat-page {
+  background-color: rgb(31, 29, 29);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.chat-container{
-    background-color: white;
-    height: 60%;
-    width:50%;
+.chat-container {
+  background-color: white;
+  height: 60%;
+  width: 50%;
 }
 
-
-.header{
-    background-color: crimson;
-    height:15%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.header {
+  background-color: crimson;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header>h2{
-    font-size: 1.5vmax;
-    color: white;
-    margin: 2.5vmax;
+.header > h2 {
+  font-size: 1.5vmax;
+  color: white;
+  margin: 2.5vmax;
 }
 
-.header p{
-    
-    margin: 2.5vmax;
-    transition: all 0.3s;
-    cursor: pointer;
+.header p {
+  margin: 2.5vmax;
+  transition: all 0.3s;
+  cursor: pointer;
 }
-.header>p:hover{
-    transform: scale(1.2);
-}
-
-.chat-box{
-    border: 0.2vmax solid black;
-    height:70%;
-    box-sizing: border-box;
+.header > p:hover {
+  transform: scale(1.2);
 }
 
-.input-box{
-    height:15%;
-    box-sizing: border-box;
-    display: flex;
+.chat-box {
+  border: 0.2vmax solid black;
+  height: 70%;
+  box-sizing: border-box;
 }
 
-#chat-input{
-    width:80%;
-    border:none;
-    padding: 2vmax;
-    box-sizing: border-box;
-    background-color: white;
-    outline:none;
-    font-size:1.2vmax;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border-top: 0.2vmax solid rgba(41, 41, 41, 0.562);
+.input-box {
+  height: 15%;
+  box-sizing: border-box;
+  display: flex;
 }
 
-#send-btn{
-    background-color: crimson;
-    color: white;
-    border:none;
-    width: 21%;
-    transition: all 0.3s;
-    cursor: pointer;
-    font-size:1.2vmax;
+#chat-input {
+  width: 80%;
+  border: none;
+  padding: 2vmax;
+  box-sizing: border-box;
+  background-color: white;
+  outline: none;
+  font-size: 1.2vmax;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  border-top: 0.2vmax solid rgba(41, 41, 41, 0.562);
 }
 
-#send-btn:hover{
-    background-color: rgb(156,13,42);
+#send-btn {
+  background-color: crimson;
+  color: white;
+  border: none;
+  width: 21%;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-size: 1.2vmax;
+}
+
+#send-btn:hover {
+  background-color: rgb(156, 13, 42);
 }
 
 .disabled {
-    background: rgb(116,13,42);
-    cursor: not-allowed;
+  background: rgb(116, 13, 42);
+  cursor: not-allowed;
+}
+
+#items {
+  width: 80%;
 }
